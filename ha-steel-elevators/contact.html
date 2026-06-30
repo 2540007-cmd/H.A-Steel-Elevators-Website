@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — H.A Steel Elevators</title>
+    <meta name="description" content="Get in touch with H.A Steel Elevators for cargo elevators, passenger elevators, overhead cranes, shed fabrication, and custom steel solutions.">
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { min-width: 320px; }
+
+        body {
+            background-color: #030712;
+            color: #ffffff;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        /* ── WHATSAPP FLOATING BUTTON ── */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            background-color: #25D366;
+            border-radius: 50px;
+            padding: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            transition: padding 0.35s ease, box-shadow 0.25s ease;
+            overflow: hidden;
+            animation: wa-pulse 2.2s infinite;
+        }
+        .whatsapp-float svg {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            fill: #ffffff;
+        }
+        .whatsapp-label {
+            max-width: 0;
+            opacity: 0;
+            white-space: nowrap;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            overflow: hidden;
+            transition: max-width 0.35s ease, opacity 0.25s ease;
+        }
+        .whatsapp-float:hover {
+            padding: 14px 22px 14px 16px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.55);
+        }
+        .whatsapp-float:hover .whatsapp-label {
+            max-width: 160px;
+            opacity: 1;
+            margin-left: 0.25rem;
+        }
+        @keyframes wa-pulse {
+            0%   { box-shadow: 0 4px 16px rgba(37,211,102,0.5); }
+            50%  { box-shadow: 0 4px 24px rgba(37,211,102,0.9); }
+            100% { box-shadow: 0 4px 16px rgba(37,211,102,0.5); }
+        }
+        @media (max-width: 600px) {
+            .whatsapp-float { bottom: 18px; right: 18px; }
+        }
+
+        /* ── NAVBAR ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #141313;
+            border-bottom: 1px solid #374151;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .site-nav {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90.5px;
+        }
+        .site-nav img { height: 90px; width: auto; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #ffffff; }
+        .nav-links a.active { color: #dc2626; font-weight: 600; }
+
+        /* ── HAMBURGER ── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 60;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #9ca3af;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            background: linear-gradient(-135deg, #141313 0%, #2a2a2a 35%, #4f5356 70%, #73787c 100%);
+            padding: 5rem 2rem 4rem 8rem;
+            width: 100%;
+        }
+        .page-hero-inner { max-width: 1280px; margin: 0; }
+
+        .eyebrow-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #dc2626;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.25rem;
+        }
+        .eyebrow-label::before {
+            content: '';
+            display: inline-block;
+            width: 20px; height: 2px;
+            background: #dc2626;
+        }
+
+        .page-title {
+            font-size: clamp(2.2rem, 4vw, 3.8rem);
+            font-weight: 200;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.1;
+            letter-spacing: 0.04em;
+        }
+        .page-title strong { font-weight: 500; }
+
+        .page-sub {
+            margin-top: 1.25rem;
+            color: #9ca3af;
+            font-size: 1rem;
+            line-height: 1.75;
+            max-width: 560px;
+        }
+
+        .beam-line {
+            margin-top: 2.5rem;
+            width: 100%;
+            height: 1px;
+            background: #374151;
+            position: relative;
+            overflow: hidden;
+        }
+        .beam-line::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: #dc2626;
+            animation: beam 1.1s cubic-bezier(0.4,0,0.2,1) forwards 0.15s;
+        }
+        @keyframes beam { from { left: -100%; } to { left: 100%; } }
+
+        /* ── CONTACT SECTION ── */
+        .contact-section {
+            background-color: #030712;
+            padding: 5rem 2rem 6rem;
+        }
+        .contact-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        @media (max-width: 900px) {
+            .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+        }
+
+        /* LEFT COLUMN — single source of truth for contact-img, shows full photo, no cropping */
+        .contact-img {
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #374151;
+            background: #111827;
+        }
+        .contact-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .contact-blurb {
+            margin-top: 2rem;
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.85;
+            max-width: 560px;
+        }
+
+        .learn-more {
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .learn-more a {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .learn-more .lm-line {
+            flex: 1;
+            height: 1px;
+            background: #374151;
+        }
+
+        .contact-img-2 {
+            margin-top: 3rem;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            border: 1px solid #374151;
+        }
+        .contact-img-2 img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* RIGHT COLUMN */
+        .contact-heading-row {
+            display: flex;
+            align-items: baseline;
+            gap: 2rem;
+        }
+        .contact-h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            font-weight: 200;
+            text-transform: uppercase;
+            color: #d1d5db;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .contact-heading-line {
+            flex: 1;
+            height: 1px;
+            background: #374151;
+        }
+
+        .contact-intro {
+            margin-top: 1.75rem;
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.85;
+            max-width: 560px;
+        }
+
+        .info-grid {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        @media (max-width: 600px) {
+            .info-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        .info-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f3f4f6;
+            margin-bottom: 0.9rem;
+        }
+        .info-block p {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            line-height: 1.75;
+        }
+        .info-block a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .info-block a:hover { color: #dc2626; }
+        .info-block strong {
+            color: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .contact-work-img {
+            margin-top: 3rem;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border: 1px solid #374151;
+        }
+        .contact-work-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background: #000;
+            border-top: 1px solid #1f2937;
+            padding: 4rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+        }
+        .footer-heading {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+        .footer-text { margin-top: 1rem; color: #4b5563; font-size: 0.875rem; line-height: 1.7; }
+        .footer-links { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-links a {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #4b5563;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-links a:hover { color: #fff; }
+        .footer-divider { border: none; border-top: 1px solid #1f2937; margin: 2.5rem 0 0; }
+        .footer-copy {
+            max-width: 1280px;
+            margin: 1.5rem auto 0;
+            padding: 0 2rem;
+            font-size: 0.75rem;
+            color: #4b5563;
+            text-align: center;
+        }
+
+        /* ── MOBILE: 768px ── */
+        @media (max-width: 768px) {
+            /* Navbar */
+            .site-nav {
+                padding: 0 1.25rem;
+                height: 70px;
+                position: relative;
+            }
+            .site-nav img { height: 60px; }
+            .nav-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px; left: 0; right: 0;
+                background-color: #141313;
+                border-top: 1px solid #374151;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                padding: 0.5rem 0;
+                z-index: 50;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links li { width: 100%; }
+            .nav-links a {
+                display: block;
+                width: 100%;
+                padding: 0.85rem 1.5rem;
+                font-size: 0.75rem;
+                border-bottom: 1px solid #1f2937;
+            }
+
+            /* Page Hero */
+            .page-hero { padding: 4rem 1.5rem; }
+
+            /* Contact Section */
+            .contact-section { padding: 4rem 1.25rem; }
+            .contact-h2 { white-space: normal; }
+
+            /* Footer */
+            .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .site-footer { padding: 3rem 1.25rem; }
+            .footer-copy { padding: 0 1.25rem; }
+        }
+
+        /* ── MOBILE: 480px ── */
+        @media (max-width: 480px) {
+            .site-nav { height: 60px; }
+            .site-nav img { height: 50px; }
+            .nav-links { top: 60px; }
+            
+            .page-hero { padding: 3rem 1rem; }
+            
+            .contact-section { padding: 3rem 1rem; }
+            .contact-heading-row { flex-direction: column; gap: 1rem; }
+            .contact-heading-line { width: 100%; height: 1px; }
+
+            .site-footer { padding: 2.5rem 1rem; }
+            .footer-copy { padding: 0 1rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="site-nav">
+            <a href="../index.html">
+                <img src="../assets/images/AH Steel Elevators Logo No background.png" alt="H.A Steel Elevators Logo">
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="facilities.html">Facilities</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="companies-served.html">Clients</a></li>
+                <li><a href="inquiry.html">Inquiry</a></li>
+                <li><a href="contact.html" class="active">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="page-hero">
+            <div class="page-hero-inner">
+                <p class="eyebrow-label">Get In Touch</p>
+                <h1 class="page-title">Let's talk about<br><strong>your project.</strong></h1>
+                <p class="page-sub">Reach out to our team for elevators, cranes, and steel fabrication solutions built around your requirements.</p>
+                <div class="beam-line"></div>
+            </div>
+        </div>
+
+        <section class="contact-section">
+            <div class="contact-inner">
+
+                <div>
+                    <div class="contact-img">
+                        <img src="../assets/images/CEO.png" alt="H.A Steel Elevators CEO">
+                    </div>
+                    <p class="contact-blurb">
+                        At H.A Steel Elevators, we believe in building strong relationships through
+                        quality workmanship, timely execution, and dependable after-sales support.
+                        Whether you require cargo elevators, passenger lifts, overhead cranes, or
+                        steel fabrication solutions, our team is committed to delivering efficient
+                        and cost-effective results.
+                    </p>
+                    <div class="learn-more">
+                        <a href="services.html">Learn More</a>
+                        <span class="lm-line"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="contact-heading-row">
+                        <h2 class="contact-h2">Contact Us</h2>
+                        <span class="contact-heading-line"></span>
+                    </div>
+
+                    <p class="contact-intro">
+                        Get in touch with H.A Steel Elevators for reliable elevator, crane, and
+                        steel structure solutions. Our experienced team is ready to provide
+                        customized fabrication, installation, and maintenance services tailored
+                        to your project requirements.
+                    </p>
+
+                    <div class="info-grid">
+                        <div class="info-block">
+                            <p class="info-heading">Phone</p>
+                            <p><a href="tel:+923339380986">+92 333 3980986</a></p>
+                            <p><a href="tel:+923452890162">+92 345 2890162</a></p>
+                        </div>
+                        <div class="info-block">
+                            <p class="info-heading">Details</p>
+                            <p><strong><a href="mailto:hasteelelevators@gmail.com">hasteelelevators@gmail.com</a></strong></p>
+                            <p><a href="https://www.hasteelelevators.com" target="_blank" rel="noopener">www.hasteelelevators.com</a></p>
+                        </div>
+                        <div class="info-block">
+                            <p class="info-heading">Address</p>
+                            <p>Plot# MIIE-685, Gali#4, Block D,<br>Shershah, SITE, Karachi, Pakistan</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-work-img">
+                        <img src="../assets/images/welder-bg.jpg" alt="Steel fabrication work in progress">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <p class="footer-heading">H.A Steel Elevators</p>
+                <p class="footer-text">
+                    Built to Last
+                </p>
+            </div>
+            <div>
+                <p class="footer-heading">Navigation</p>
+                <div class="footer-links">
+                    <a href="services.html">Services</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="inquiry.html">Inquiry</a>
+                    <a href="contact.html">Contact Us</a>
+                </div>
+            </div>
+            <div>
+                <p class="footer-heading">Location</p>
+                <p class="footer-text">Plot# MIIE-685, Street #4, Block D, Shershah, SITE, Karachi, Pakistan</p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-copy">© 2026 H.A Steel Elevators. Designed for industrial excellence. All Rights Reserved.</p>
+    </footer>
+
+     <a href="https://wa.me/923333980986?text=Hi%2C%20can%20I%20get%20a%20quote%3F"
+       class="whatsapp-float"
+       target="_blank"
+       rel="noopener"
+       aria-label="Chat with us on WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-1.746-.792-3.034-2.058-3.851-3.557-.158-.295-.022-.435.118-.605.166-.205.357-.395.482-.605.122-.21.092-.382-.04-.582-.13-.197-.484-1.162-.665-1.557-.18-.39-.366-.34-.518-.345-.137-.005-.293-.005-.45-.005-.155 0-.408.06-.625.297-.213.241-.823.806-.823 1.965 0 1.16.84 2.282 1.225 2.882.387.6 1.97 3.012 4.84 4.107 2.872 1.094 2.872.728 3.393.682.518-.045 1.766-.722 2.027-1.42.258-.7.258-1.296.18-1.42-.077-.122-.301-.197-.604-.345m-5.46 7.434h-.005a9.94 9.94 0 01-5.06-1.385l-.363-.215-3.762.99 1.005-3.671-.235-.376a9.93 9.93 0 01-1.527-5.293c.005-5.486 4.474-9.954 9.957-9.954 2.658 0 5.155 1.038 7.03 2.913a9.886 9.886 0 012.91 7.04c-.003 5.486-4.471 9.951-9.95 9.951m8.413-18.36A11.815 11.815 0 0012.04 0C5.495 0 .163 5.328.16 11.876c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.652a11.882 11.882 0 005.683 1.448h.005c6.544 0 11.877-5.328 11.88-11.877a11.811 11.811 0 00-3.452-8.394"/>
+        </svg>
+        <span class="whatsapp-label">Chat with us</span>
+    </a>
+    
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks  = document.querySelector('.nav-links');
+        navToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            navToggle.classList.toggle('open', isOpen);
+            navToggle.setAttribute('aria-expanded', isOpen);
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                navToggle.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>
