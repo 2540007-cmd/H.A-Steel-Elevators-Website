@@ -24,8 +24,8 @@ const PROJECTS = [
                 • System testing and commissioning<br>
                 • Quality inspection and technical support<br>`,
         images: [
-            "../assets/images/southafrica1.jpeg",
-            "../assets/images/southafrica2.jpeg"
+            "../assets/images/southafrica1.webp",
+            "../assets/images/southafrica2.webp"
         ]
     },
 
@@ -47,7 +47,7 @@ const PROJECTS = [
                     efficient and reliable vertical passanger transportation, 
                     supporting the client's operational needs.`,
         images: [
-            "../assets/images/salt-fact.jpeg",
+            "../assets/images/salt-fact.webp",
         ]
     },
 
@@ -70,7 +70,7 @@ const PROJECTS = [
                     sensitive fabric materials used in sterile mask production, 
                     ensuring protection from external environmental factors.`,
         images: [
-            "../assets/images/Warehouse.jpeg"
+            "../assets/images/Warehouse.webp"
         ]
     },
 
@@ -92,7 +92,7 @@ const PROJECTS = [
                     environment for operational staff while performing waste 
                     management activities, including incinerator operations.`,
         images: [
-            "../assets/images/alhadid.jpeg"
+            "../assets/images/alhadid.webp"
         ]
     },
 
@@ -115,7 +115,7 @@ const PROJECTS = [
                     improving material handling efficiency and supporting smooth 
                     daily operations`,
         images: [
-            "../assets/images/sunaina.jpeg"
+            "../assets/images/sunaina.webp"
         ]
     },
 
@@ -137,8 +137,8 @@ const PROJECTS = [
                         materials from a higher level to a lower level, ensuring 
                         smooth workflow and reducing operational interruptions.`,
         images: [
-            "../assets/images/Roomitex1.jpeg",
-            "../assets/images/Roomitex2.jpeg"
+            "../assets/images/Roomitex1.webp",
+            "../assets/images/Roomitex2.webp"
         ]
     },
 
@@ -160,8 +160,8 @@ const PROJECTS = [
                         by creating additional levels for organized fish storage while 
                         improving warehouse efficiency and utilization.`,
         images: [
-            "../assets/images/fishery1.jpeg",
-            "../assets/images/fishery2.jpeg"
+            "../assets/images/fishery1.webp",
+            "../assets/images/fishery2.webp"
         ]
     }
 
