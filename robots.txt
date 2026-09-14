@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /login.html
+Disallow: /login
+Allow: /
+
+Sitemap: https://hasteelelevators.com/sitemap.xml
