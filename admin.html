@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin — H.A Steel Elevators</title>
+    <link rel="icon" href="favicon.ico">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #030712;
+            color: #ffffff;
+            font-family: 'Inter', system-ui, sans-serif;
+            padding: 2rem 1.25rem 5rem;
+        }
+        .wrap { max-width: 760px; margin: 0 auto; }
+        .top-bar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        h1 span { color: #dc2626; }
+        .sub { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #374151;
+            color: #9ca3af;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .logout-btn:hover { border-color: #dc2626; color: #fff; }
+
+        .card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        label {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #9ca3af;
+            margin: 1rem 0 0.35rem;
+        }
+        label:first-of-type { margin-top: 0; }
+        input, select, textarea {
+            width: 100%;
+            background: #030712;
+            border: 1px solid #374151;
+            color: #fff;
+            padding: 0.6rem 0.75rem;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #dc2626;
+        }
+        textarea { resize: vertical; min-height: 70px; }
+        .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .images-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .image-row { display: flex; gap: 0.5rem; }
+        .image-row input { flex: 1; }
+        .image-row button {
+            background: #1f2937; border: 1px solid #374151; color: #9ca3af;
+            border-radius: 4px; padding: 0 0.75rem; cursor: pointer;
+        }
+        .btn-add-image {
+            margin-top: 0.5rem;
+            background: transparent; border: 1px dashed #374151; color: #9ca3af;
+            padding: 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+            width: 100%;
+        }
+        .btn-add-image:hover { border-color: #dc2626; color: #fff; }
+
+        button.primary {
+            width: 100%;
+            margin-top: 1.5rem;
+            background: #dc2626;
+            border: none;
+            color: #fff;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button.primary:hover { background: #b91c1c; }
+        button.primary:disabled { background: #374151; cursor: not-allowed; }
+
+        .status {
+            margin-top: 0.85rem;
+            font-size: 0.82rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 4px;
+            display: none;
+        }
+        .status.show { display: block; }
+        .status.ok { background: rgba(22,163,74,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+        .status.err { background: rgba(220,38,38,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+
+        .existing-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #1f2937;
+        }
+        .existing-item:last-child { border-bottom: none; }
+        .existing-item .meta { font-size: 0.85rem; }
+        .existing-item .meta strong { display: block; }
+        .existing-item .meta span { color: #9ca3af; font-size: 0.78rem; }
+        .existing-item button {
+            background: transparent; border: 1px solid #374151; color: #f87171;
+            padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;
+        }
+        .existing-item button:hover { border-color: #dc2626; }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="top-bar">
+            <div>
+                <h1>PROJECTS <span>ADMIN</span></h1>
+                <p class="sub">Add or remove projects shown on the public Projects page. Changes appear immediately — no deploy needed.</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
+
+        <div class="card">
+            <h2>Add New Project</h2>
+
+            <label>Title</label>
+            <input id="f_title" placeholder="e.g. Multi-Story Cargo Elevator" />
+
+            <div class="row2">
+                <div>
+                    <label>Category</label>
+                    <select id="f_category">
+                        <option>Elevators</option>
+                        <option>Crane</option>
+                        <option>Shed</option>
+                        <option>Warehouse</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Type Label</label>
+                    <input id="f_typeLabel" placeholder="e.g. Cargo Elevator" />
+                </div>
+            </div>
+
+            <div class="row2">
+                <div>
+                    <label>Company</label>
+                    <input id="f_company" placeholder="Client name" />
+                </div>
+                <div>
+                    <label>Year</label>
+                    <input id="f_year" type="number" placeholder="2026" />
+                </div>
+            </div>
+
+            <label>Location</label>
+            <input id="f_location" placeholder="City, Country" />
+
+            <label>Scope of Work (one line per bullet)</label>
+            <textarea id="f_scope" placeholder="Fabrication&#10;Installation&#10;Testing"></textarea>
+
+            <label>Description</label>
+            <textarea id="f_description" placeholder="Full project description..."></textarea>
+
+            <label>Image URLs</label>
+            <div class="images-list" id="imagesList">
+                <div class="image-row">
+                    <input placeholder="https://... or /assets/images/yourphoto.webp" />
+                    <button type="button" onclick="removeImageRow(this)">✕</button>
+                </div>
+            </div>
+            <button type="button" class="btn-add-image" onclick="addImageRow()">+ Add another image</button>
+
+            <button class="primary" id="submitBtn" onclick="addProject()">Add Project</button>
+            <div id="addStatus" class="status"></div>
+        </div>
+
+        <div class="card">
+            <h2>Existing Projects</h2>
+            <div id="existingList"></div>
+        </div>
+    </div>
+
+    <script>
+        function addImageRow() {
+            const list = document.getElementById('imagesList');
+            const row = document.createElement('div');
+            row.className = 'image-row';
+            row.innerHTML = `<input placeholder="https://... or /assets/images/yourphoto.webp" />
+                <button type="button" onclick="removeImageRow(this)">✕</button>`;
+            list.appendChild(row);
+        }
+
+        function removeImageRow(btn) {
+            const list = document.getElementById('imagesList');
+            if (list.children.length > 1) btn.closest('.image-row').remove();
+        }
+
+        function showStatus(el, ok, msg) {
+            el.textContent = msg;
+            el.className = 'status show ' + (ok ? 'ok' : 'err');
+        }
+
+        async function addProject() {
+            const images = Array.from(document.querySelectorAll('#imagesList input'))
+                .map(i => i.value.trim())
+                .filter(Boolean);
+
+            const scopeLines = document.getElementById('f_scope').value
+                .split('\n').map(s => s.trim()).filter(Boolean);
+            const scopeHtml = scopeLines.map(s => `• ${s}<br>`).join('');
+
+            const payload = {
+                title: document.getElementById('f_title').value.trim(),
+                category: document.getElementById('f_category').value,
+                typeLabel: document.getElementById('f_typeLabel').value.trim(),
+                company: document.getElementById('f_company').value.trim(),
+                location: document.getElementById('f_location').value.trim(),
+                year: document.getElementById('f_year').value,
+                scope: scopeHtml,
+                description: document.getElementById('f_description').value.trim(),
+                images,
+            };
+
+            if (!payload.title || !payload.company || !payload.year) {
+                showStatus(document.getElementById('addStatus'), false, 'Title, company, and year are required.');
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Adding...';
+
+            try {
+                const res = await fetch('/api/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (res.status === 401) {
+                    showStatus(document.getElementById('addStatus'), false, 'Session expired — please log in again.');
+                    setTimeout(() => window.location.href = '/login', 1500);
+                } else if (!res.ok) {
+                    showStatus(document.getElementById('addStatus'), false, 'Error: ' + (await res.text()));
+                } else {
+                    showStatus(document.getElementById('addStatus'), true, 'Project added — check the live Projects page.');
+                    document.querySelectorAll('#panel input, #panel textarea, .card input, .card textarea').forEach(i => i.value = '');
+                    document.getElementById('f_category').selectedIndex = 0;
+                    loadExisting();
+                }
+            } catch (err) {
+                showStatus(document.getElementById('addStatus'), false, 'Network error: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Add Project';
+            }
+        }
+
+        async function loadExisting() {
+            const list = document.getElementById('existingList');
+            list.innerHTML = 'Loading…';
+            try {
+                const res = await fetch('/api/projects', { cache: 'no-store' });
+                const projects = await res.json();
+                if (!projects.length) {
+                    list.innerHTML = '<p style="color:#9ca3af;font-size:0.85rem;">No projects yet.</p>';
+                    return;
+                }
+                list.innerHTML = '';
+                projects.forEach(p => {
+                    const row = document.createElement('div');
+                    row.className = 'existing-item';
+                    row.innerHTML = `
+                        <div class="meta">
+                            <strong>${p.title}</strong>
+                            <span>${p.company} — ${p.location} (${p.year})</span>
+                        </div>
+                        <button onclick="deleteProject('${p.id}')">Delete</button>
+                    `;
+                    list.appendChild(row);
+                });
+            } catch (err) {
+                list.innerHTML = '<p style="color:#f87171;font-size:0.85rem;">Failed to load projects.</p>';
+            }
+        }
+
+        async function deleteProject(id) {
+            if (!confirm('Delete this project? This cannot be undone.')) return;
+            try {
+                const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+                if (res.status === 401) {
+                    alert('Session expired — please log in again.');
+                    window.location.href = '/login';
+                } else if (!res.ok) {
+                    alert('Error deleting: ' + (await res.text()));
+                } else {
+                    loadExisting();
+                }
+            } catch (err) {
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+
+        loadExisting();
+    </script>
+</body>
+
+</html>
