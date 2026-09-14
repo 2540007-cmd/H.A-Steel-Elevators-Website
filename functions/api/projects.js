@@ -1,8 +1,12 @@
 /* ============================================================
    API: /api/projects
    GET  -> list all projects (public, used by projects.html)
-   POST -> add a new project (protected, used by admin.html)
+   POST -> add a new project (protected: requires valid admin
+           session cookie, set by /api/login after admin.html
+           is unlocked by the _middleware.js gate)
    ============================================================ */
+
+import { verifySession } from '../_utils/auth.js';
 
 export async function onRequestGet({ env }) {
   const data = (await env.PROJECTS_KV.get('projects', { type: 'json' })) || [];
@@ -12,14 +16,14 @@ export async function onRequestGet({ env }) {
 }
 
 export async function onRequestPost({ request, env }) {
-  const auth = request.headers.get('Authorization');
-  if (auth !== `Bearer ${env.ADMIN_PASSWORD}`) {
+  const cookie = request.headers.get('Cookie');
+  const valid = await verifySession(cookie, env.ADMIN_PASSWORD);
+  if (!valid) {
     return new Response('Unauthorized', { status: 401 });
   }
 
   const body = await request.json();
 
-  // Basic validation of required fields
   const required = ['title', 'category', 'typeLabel', 'company', 'location', 'year'];
   for (const field of required) {
     if (!body[field]) {
