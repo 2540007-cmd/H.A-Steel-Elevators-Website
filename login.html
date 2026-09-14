@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Login — H.A Steel Elevators</title>
+    <link rel="icon" href="favicon.ico">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #030712;
+            color: #ffffff;
+            font-family: 'Inter', system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        .box { width: 100%; max-width: 380px; text-align: center; }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        h1 span { color: #dc2626; }
+        .sub { color: #9ca3af; font-size: 0.85rem; margin-bottom: 2rem; }
+        .card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            background: #030712;
+            border: 1px solid #374151;
+            color: #fff;
+            padding: 0.65rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        input:focus { outline: none; border-color: #dc2626; }
+        button {
+            width: 100%;
+            margin-top: 1.25rem;
+            background: #dc2626;
+            border: none;
+            color: #fff;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #b91c1c; }
+        button:disabled { background: #374151; cursor: not-allowed; }
+        .error {
+            margin-top: 0.85rem;
+            font-size: 0.82rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 4px;
+            display: none;
+            background: rgba(220,38,38,0.15);
+            color: #f87171;
+            border: 1px solid rgba(248,113,113,0.3);
+        }
+        .error.show { display: block; }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>ADMIN <span>LOGIN</span></h1>
+        <p class="sub">H.A Steel Elevators — Projects Management</p>
+        <div class="card">
+            <label>Password</label>
+            <input type="password" id="pw" placeholder="Enter admin password" autofocus />
+            <button id="submitBtn" onclick="login()">Log In</button>
+            <div id="err" class="error"></div>
+        </div>
+    </div>
+
+    <script>
+        async function login() {
+            const pw = document.getElementById('pw').value;
+            const btn = document.getElementById('submitBtn');
+            const err = document.getElementById('err');
+            err.classList.remove('show');
+
+            if (!pw) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Checking...';
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pw }),
+                });
+
+                if (res.ok) {
+                    window.location.href = '/admin.html';
+                } else {
+                    err.textContent = 'Incorrect password.';
+                    err.classList.add('show');
+                }
+            } catch (e) {
+                err.textContent = 'Network error: ' + e.message;
+                err.classList.add('show');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Log In';
+            }
+        }
+
+        document.getElementById('pw').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') login();
+        });
+    </script>
+</body>
+
+</html>
