@@ -1,7 +1,7 @@
 /* ============================================================
    H.A Steel Elevators — main Worker
    Handles: /api/projects (GET/POST), /api/projects/:id (DELETE),
-   /api/login, /api/logout, /api/seed, and protecting /admin.html
+   /api/login, /api/logout, and protecting /admin.html
    from direct access. Everything else falls through to the
    static site (env.ASSETS).
    ============================================================ */
