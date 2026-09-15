@@ -7,7 +7,6 @@
    ============================================================ */
 
 import { createSessionCookie, clearSessionCookie, verifySession } from './auth.js';
-import { EXISTING_PROJECTS } from './seed-data.js';
 
 const PROTECTED_PAGES = new Set(['/admin.html', '/admin', '/admin/']);
 
@@ -96,22 +95,6 @@ export default {
       return new Response(JSON.stringify({ success: true }), {
         headers: { 'Content-Type': 'application/json', 'Set-Cookie': clearSessionCookie() },
       });
-    }
-
-    // ---------- POST /api/seed (one-time migration) ----------
-    if (pathname === '/api/seed' && method === 'POST') {
-      const validCookie = await verifySession(request.headers.get('Cookie'), env.ADMIN_PASSWORD);
-      const validHeader = request.headers.get('Authorization') === `Bearer ${env.ADMIN_PASSWORD}`;
-      if (!validCookie && !validHeader) return new Response('Unauthorized', { status: 401 });
-
-      const existing = await env.PROJECTS_KV.get('projects', { type: 'json' });
-      if (existing && existing.length > 0) {
-        return Response.json({ skipped: true, reason: 'KV already has data', count: existing.length });
-      }
-
-      const seeded = EXISTING_PROJECTS.map((p) => ({ ...p, createdAt: new Date().toISOString() }));
-      await env.PROJECTS_KV.put('projects', JSON.stringify(seeded));
-      return Response.json({ skipped: false, count: seeded.length });
     }
 
     // ---------- Protect the admin page ----------
