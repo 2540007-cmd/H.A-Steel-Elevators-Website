@@ -160,3 +160,75 @@ function openModal(project) {
             modalThumbs.querySelectorAll(".photo-thumb").forEach(t => t.classList.remove("active"));
             thumb.classList.add("active");
         });
+        modalThumbs.appendChild(thumb);
+    });
+
+    modalCompany.textContent = project.company;
+    modalLocation.textContent = project.location;
+    modalYearDetail.textContent = project.year;
+    modalCategoryDetail.textContent = project.typeLabel;
+    modalScope.innerHTML = project.scope;
+    modalDescription.innerHTML = project.description;
+
+
+    modalOverlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+    modalOverlay.classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+});
+
+/* ============================================================
+   EVENT LISTENERS — filters, search, sort
+   ============================================================ */
+
+filterPills.forEach(pill => {
+    pill.addEventListener("click", () => {
+        filterPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        activeFilter = pill.dataset.filter;
+        render();
+    });
+});
+
+searchInput.addEventListener("input", (e) => {
+    searchTerm = e.target.value;
+    render();
+});
+
+sortSelect.addEventListener("change", (e) => {
+    sortOrder = e.target.value;
+    render();
+});
+
+/* ============================================================
+   INIT — fetch live data, then render
+   ============================================================ */
+
+async function init() {
+    try {
+        const res = await fetch('/api/projects', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`API returned ${res.status}`);
+        PROJECTS = await res.json();
+    } catch (err) {
+        console.error('Failed to load projects:', err);
+        projectsSection.innerHTML = '';
+        emptyState.classList.add('visible');
+        emptyState.querySelector('p').textContent =
+            'Could not load projects right now. Please refresh or try again shortly.';
+        return;
+    }
+    render();
+}
+
+init();
