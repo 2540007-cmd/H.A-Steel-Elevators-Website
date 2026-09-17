@@ -16,5 +16,11 @@
       "binding": "PROJECTS_KV",
       "id": "51bfda1c3e8544b1b6286f7738394545"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "IMAGES",
+      "bucket_name": "ha-steel-images"
+    }
   ]
 }
