@@ -1,9 +1,9 @@
 /* ============================================================
    H.A Steel Elevators — main Worker
    Handles: /api/projects (GET/POST), /api/projects/:id (DELETE),
-   /api/login, /api/logout, and protecting /admin.html
-   from direct access. Everything else falls through to the
-   static site (env.ASSETS).
+   /api/login, /api/logout, /api/upload-image, /images/:key, and
+   protecting /admin.html from direct access. Everything else
+   falls through to the static site (env.ASSETS).
    ============================================================ */
 
 import { createSessionCookie, clearSessionCookie, verifySession } from './auth.js';
@@ -94,6 +94,41 @@ export default {
     if (pathname === '/api/logout' && method === 'POST') {
       return new Response(JSON.stringify({ success: true }), {
         headers: { 'Content-Type': 'application/json', 'Set-Cookie': clearSessionCookie() },
+      });
+    }
+
+    // ---------- POST /api/upload-image ----------
+    if (pathname === '/api/upload-image' && method === 'POST') {
+      const valid = await verifySession(request.headers.get('Cookie'), env.ADMIN_PASSWORD);
+      if (!valid) return new Response('Unauthorized', { status: 401 });
+
+      const contentType = request.headers.get('Content-Type') || '';
+      if (!contentType.startsWith('image/')) {
+        return new Response('Expected an image upload', { status: 400 });
+      }
+
+      // e.g. "image/webp" -> "webp", "image/svg+xml" -> "svg"
+      const ext = contentType.split('/')[1].split('+')[0].split(';')[0] || 'bin';
+      const key = `${crypto.randomUUID()}.${ext}`;
+
+      await env.IMAGES.put(key, request.body, {
+        httpMetadata: { contentType },
+      });
+
+      return Response.json({ url: `/images/${key}` }, { status: 201 });
+    }
+
+    // ---------- GET /images/:key ----------
+    const imageMatch = pathname.match(/^\/images\/([^/]+)$/);
+    if (imageMatch && method === 'GET') {
+      const object = await env.IMAGES.get(imageMatch[1]);
+      if (!object) return new Response('Not found', { status: 404 });
+
+      return new Response(object.body, {
+        headers: {
+          'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
+          'Cache-Control': 'public, max-age=31536000, immutable',
+        },
       });
     }
 
